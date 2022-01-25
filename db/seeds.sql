@@ -5,7 +5,7 @@ VALUES (1,"Sales"),
        (4,"Legal");
 
 INSERT INTO role (id, title, salary, department_id)
-VALUES (11,"Business Development Representative",50000,1),
+VALUES (11,"Sales Representative",50000,1),
        (12,"Sales Manager",90000,1),
        (21,"Junior Developer",70000,2),
        (22,"Senior Software Engineer",100000,2),
