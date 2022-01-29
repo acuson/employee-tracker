@@ -74,7 +74,7 @@ const menu = async () => {
     };
 }
 
-// View all departments
+// Function to view all departments
 const deptView = async () => {
     console.log('View Departments')
     let query = 'SELECT * FROM department'
@@ -88,7 +88,7 @@ const deptView = async () => {
         menu();
     })
 }
-// View all roles
+// Function to view all roles
 const roleView = async () => {
     console.log('View Roles')
     let query = 'SELECT * FROM role'
@@ -102,7 +102,7 @@ const roleView = async () => {
         menu();
     })
 }
-// View all employees
+// Function to view all employees
 const empView = async () => {
     console.log('View Employees')
     let query = 'SELECT * FROM employee'
@@ -117,7 +117,7 @@ const empView = async () => {
     })
 }
 
-// Add department
+// Function to add department
 const deptAdd = async () => {
     try {
         console.log('Add Department');
@@ -138,7 +138,7 @@ const deptAdd = async () => {
         menu();
     };
 }
-// Add role
+// Function to add role
 const roleAdd = async () => {
     try {
         console.log('Add Role');
@@ -159,7 +159,7 @@ const roleAdd = async () => {
         menu();
     };
 }
-// Add employee
+// Function to add employee
 const empAdd = async () => {
     try {
         console.log('Add Employee');
@@ -212,7 +212,7 @@ const empAdd = async () => {
         menu();
     };
 }
-// Update employee role
+// Function to update employee role
 const empUpdate = async () => {
     try {
         console.log('Update Employee');
