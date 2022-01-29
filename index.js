@@ -65,7 +65,7 @@ const menu = async () => {
                 empUpdate();
                 break
             case 'Exit':
-                connection.end();
+                db.end();
                 break;
         };
     } catch (err) {
@@ -78,7 +78,7 @@ const menu = async () => {
 const deptView = async () => {
     console.log('View Departments')
     let query = 'SELECT * FROM department'
-    connection.query(query, function(err,res) {
+    db.query(query, function(err,res) {
         if (err) {
             console.log(err)
         };
@@ -92,7 +92,7 @@ const deptView = async () => {
 const roleView = async () => {
     console.log('View Roles')
     let query = 'SELECT * FROM role'
-    connection.query(query, function(err,res) {
+    db.query(query, function(err,res) {
         if (err) {
             console.log(err)
         };
@@ -106,7 +106,7 @@ const roleView = async () => {
 const empView = async () => {
     console.log('View Employees')
     let query = 'SELECT * FROM employee'
-    connection.query(query, function(err,res) {
+    db.query(query, function(err,res) {
         if (err) {
             console.log(err)
         };
@@ -128,7 +128,7 @@ const deptAdd = async () => {
                 message: 'What is the name of the department?'
             }
         ]);
-        let result = await connection.query("INSERT INTO department SET ?", {
+        let result = await db.query("INSERT INTO department SET ?", {
             department_name: answer.deptName
         });
         console.log(`${answer.deptName} added successfully to departments.\n`)
@@ -149,7 +149,7 @@ const roleAdd = async () => {
                 message: 'What is the name of the role?'
             }
         ]);
-        let result = await connection.query("INSERT INTO role SET ?", {
+        let result = await db.query("INSERT INTO role SET ?", {
             role_name: answer.roleName
         });
         console.log(`${answer.roleName} added successfully to roles.\n`)
@@ -163,8 +163,8 @@ const roleAdd = async () => {
 const empAdd = async () => {
     try {
         console.log('Add Employee');
-        let roles = await connection.query("SELECT * FROM role");
-        let managers = await connection.query("SELECT * FROM employee");
+        let roles = await db.query("SELECT * FROM role");
+        let managers = await db.query("SELECT * FROM employee");
         let answer = await inquirer.prompt([
             {
                 name: 'firstName',
@@ -199,7 +199,7 @@ const empAdd = async () => {
                 message: "What is the employee's manager's Id?"
             }
         ])
-        let result = await connection.query("INSERT INTO employee SET ?", {
+        let result = await db.query("INSERT INTO employee SET ?", {
             first_name: answer.firstName,
             last_name: answer.lastName,
             role_id: (answer.employeeRoleId),
@@ -216,7 +216,7 @@ const empAdd = async () => {
 const empUpdate = async () => {
     try {
         console.log('Update Employee');
-        let employees = await connection.query("SELECT * FROM employee");
+        let employees = await db.query("SELECT * FROM employee");
         let employeeSelection = await inquirer.prompt([
             {
                 name: 'employee',
@@ -230,7 +230,7 @@ const empUpdate = async () => {
                 message: 'Which employee would you like to update?'
             }
         ]);
-        let roles = await connection.query("SELECT * FROM role");
+        let roles = await db.query("SELECT * FROM role");
         let roleSelection = await inquirer.prompt([
             {
                 name: 'role',
@@ -244,7 +244,7 @@ const empUpdate = async () => {
                 message: 'Please select the role to update the employee with.'
             }
         ]);
-        let result = await connection.query("UPDATE employee SET ? WHERE ?", [{ role_id: roleSelection.role }, { id: employeeSelection.employee }]);
+        let result = await db.query("UPDATE employee SET ? WHERE ?", [{ role_id: roleSelection.role }, { id: employeeSelection.employee }]);
         console.log(`The role was successfully updated.\n`);
         menu();
 
