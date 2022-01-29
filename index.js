@@ -129,7 +129,7 @@ const deptAdd = async () => {
             }
         ]);
         let result = await db.query("INSERT INTO department SET ?", {
-            department_name: answer.deptName
+            name: answer.deptName
         });
         console.log(`${answer.deptName} added successfully to departments.\n`)
         menu();
@@ -147,18 +147,46 @@ const roleAdd = async () => {
                 name: 'roleName',
                 type: 'input',
                 message: 'What is the name of the role?'
+            },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary for this role?'
+            },
+            {
+                name: 'dept',
+                type: 'list',
+                choices: departments.map((dept) => {
+                    return {
+                        name: dept.department_name,
+                        value: dept.id
+                    }
+                }),
+                message: 'What department ID is this role associated with?',
             }
         ]);
-        let result = await db.query("INSERT INTO role SET ?", {
-            role_name: answer.roleName
-        });
-        console.log(`${answer.roleName} added successfully to roles.\n`)
+        
+        let chosenDept;
+        for (i = 0; i < departments.length; i++) {
+            if(departments[i].department_id === answer.choice) {
+                chosenDept = departments[i];
+            };
+        }
+        let result = await connection.query("INSERT INTO role SET ?", {
+            title: answer.title,
+            salary: answer.salary,
+            dept: answer.deptId
+        })
+
+        console.log(`${answer.title} role added successfully.\n`)
         menu();
+
     } catch (err) {
         console.log(err);
         menu();
     };
 }
+        
 // Function to add employee
 const empAdd = async () => {
     try {
