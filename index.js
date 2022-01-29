@@ -142,6 +142,7 @@ const deptAdd = async () => {
 const roleAdd = async () => {
     try {
         console.log('Add Role');
+        let department = await db.query('SELECT * FROM department');
         let answer = await inquirer.prompt([
             {
                 name: 'roleName',
@@ -156,31 +157,29 @@ const roleAdd = async () => {
             {
                 name: 'dept',
                 type: 'list',
-                choices: departments.map((dept) => {
+                choices: department.map((dept) => {
                     return {
                         name: dept.department_name,
                         value: dept.id
                     }
                 }),
-                message: 'What department ID is this role associated with?',
+                message: 'What department ID for this role?',
             }
         ]);
         
         let chosenDept;
-        for (i = 0; i < departments.length; i++) {
-            if(departments[i].department_id === answer.choice) {
-                chosenDept = departments[i];
+        for (i = 0; i < department.length; i++) {
+            if(department[i].department_id === answer.choice) {
+                chosenDept = department[i];
             };
         }
-        let result = await connection.query("INSERT INTO role SET ?", {
+        let result = await db.query("INSERT INTO role SET ?", {
             title: answer.title,
             salary: answer.salary,
-            dept: answer.deptId
+            deptartment_id: answer.deptId
         })
-
         console.log(`${answer.title} role added successfully.\n`)
         menu();
-
     } catch (err) {
         console.log(err);
         menu();
